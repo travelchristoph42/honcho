@@ -1,8 +1,6 @@
 services:
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/plastic-labs/honcho:latest
     entrypoint: ["sh", "docker/entrypoint.sh"]
     depends_on:
       database:
@@ -15,20 +13,13 @@ services:
       - DB_CONNECTION_URI=postgresql+psycopg://honcho:honcho@database:5432/honcho
       - CACHE_URL=redis://redis:6379/0?suppress=true
       - CACHE_ENABLED=true
-      - LLM_VLLM_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-      - LLM_VLLM_BASE_URL=https://openrouter.ai/api/v1
-      - LLM_EMBEDDING_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-      - LLM_EMBEDDING_BASE_URL=https://openrouter.ai/api/v1
-      - LLM_EMBEDDING_MODEL=openai/text-embedding-3-small
+      # Honcho v3 standard env vars for OpenRouter
       - LLM_OPENAI_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-    volumes:
-      - ./docker/entrypoint.sh:/app/docker/entrypoint.sh:ro
+      - OPENAI_BASE_URL=https://openrouter.ai/api/v1
     restart: unless-stopped
 
   deriver:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/plastic-labs/honcho:latest
     entrypoint: ["/app/.venv/bin/python", "-m", "src.deriver"]
     depends_on:
       database:
@@ -40,19 +31,14 @@ services:
       - CACHE_URL=redis://redis:6379/0?suppress=true
       - CACHE_ENABLED=true
       - METRICS_ENABLED=false
-      - LLM_VLLM_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-      - LLM_VLLM_BASE_URL=https://openrouter.ai/api/v1
-      - LLM_EMBEDDING_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-      - LLM_EMBEDDING_BASE_URL=https://openrouter.ai/api/v1
-      - LLM_EMBEDDING_MODEL=openai/text-embedding-3-small
+      # Honcho v3 standard env vars for OpenRouter
       - LLM_OPENAI_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
+      - OPENAI_BASE_URL=https://openrouter.ai/api/v1
     restart: unless-stopped
 
   database:
     image: pgvector/pgvector:pg15
     restart: unless-stopped
-    ports:
-      - "5432:5432"
     command: ["postgres", "-c", "max_connections=200"]
     environment:
       - POSTGRES_DB=honcho
