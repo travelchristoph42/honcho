@@ -24,12 +24,12 @@ services:
           OPENAI_API_KEY = "sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d"
           [deriver.model_config]
           transport = "openai"
-          model = "z-ai/glm-4.7-flash"
+          model = "google/gemini-2.5-flash"
           [deriver.model_config.overrides]
           base_url = "https://openrouter.ai/api/v1"
           [dialectic.levels.low.model_config]
           transport = "openai"
-          model = "z-ai/glm-4.7-flash"
+          model = "google/gemini-2.5-flash"
           [dialectic.levels.low.model_config.overrides]
           base_url = "https://openrouter.ai/api/v1"
           [embedding.model_config]
@@ -65,12 +65,12 @@ services:
           OPENAI_API_KEY = "sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d"
           [deriver.model_config]
           transport = "openai"
-          model = "z-ai/glm-4.7-flash"
+          model = "google/gemini-2.5-flash"
           [deriver.model_config.overrides]
           base_url = "https://openrouter.ai/api/v1"
           [dialectic.levels.low.model_config]
           transport = "openai"
-          model = "z-ai/glm-4.7-flash"
+          model = "google/gemini-2.5-flash"
           [dialectic.levels.low.model_config.overrides]
           base_url = "https://openrouter.ai/api/v1"
           [embedding.model_config]
