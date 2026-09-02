@@ -1,7 +1,7 @@
 services:
   api:
     build:
-      context: https://github.com/travelchristoph42/honcho.git
+      context: .
       dockerfile: Dockerfile
     entrypoint: ["sh", "docker/entrypoint.sh"]
     depends_on:
@@ -19,7 +19,7 @@ services:
 
   deriver:
     build:
-      context: https://github.com/travelchristoph42/honcho.git
+      context: .
       dockerfile: Dockerfile
     entrypoint: ["/app/.venv/bin/python", "-m", "src.deriver"]
     depends_on:
