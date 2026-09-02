@@ -1,15 +1,9 @@
 [app]
 LOG_LEVEL = "INFO"
-SESSION_OBSERVERS_LIMIT = 10
-GET_CONTEXT_MAX_TOKENS = 100000
-MAX_FILE_SIZE = 5242880
-MAX_MESSAGE_SIZE = 25000
-EMBED_MESSAGES = true
 NAMESPACE = "honcho"
 
 [db]
 CONNECTION_URI = "postgresql+psycopg://honcho:honcho@database:5432/honcho"
-SCHEMA = "public"
 POOL_SIZE = 10
 MAX_OVERFLOW = 20
 POOL_TIMEOUT = 30
@@ -30,12 +24,10 @@ OPENAI_API_KEY = "sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b
 [embedding]
 VECTOR_DIMENSIONS = 1536
 MAX_INPUT_TOKENS = 8192
-MAX_TOKENS_PER_REQUEST = 300000
 
 [embedding.model_config]
 transport = "openai"
 model = "openai/text-embedding-3-small"
-
 [embedding.model_config.overrides]
 base_url = "https://openrouter.ai/api/v1"
 
@@ -43,78 +35,50 @@ base_url = "https://openrouter.ai/api/v1"
 ENABLED = true
 WORKERS = 1
 POLLING_SLEEP_INTERVAL_SECONDS = 1.0
-STALE_SESSION_TIMEOUT_MINUTES = 5
 DEDUPLICATE = true
-MAX_INPUT_TOKENS = 25000
-WORKING_REPRESENTATION_MAX_OBSERVATIONS = 100
 
 [deriver.model_config]
 transport = "openai"
 model = "google/gemini-2.5-flash"
-
 [deriver.model_config.overrides]
 base_url = "https://openrouter.ai/api/v1"
 
 [dialectic]
 MAX_OUTPUT_TOKENS = 8192
-MAX_INPUT_TOKENS = 100000
 HISTORY_TOKEN_LIMIT = 8192
-SESSION_HISTORY_MAX_TOKENS = 4096
 
 [dialectic.levels.minimal]
-MAX_TOOL_ITERATIONS = 1
 MAX_OUTPUT_TOKENS = 250
-
 [dialectic.levels.minimal.model_config]
 transport = "openai"
 model = "google/gemini-2.5-flash"
-
 [dialectic.levels.minimal.model_config.overrides]
 base_url = "https://openrouter.ai/api/v1"
-
-[dialectic.levels.low]
-MAX_TOOL_ITERATIONS = 5
 
 [dialectic.levels.low.model_config]
 transport = "openai"
 model = "google/gemini-2.5-flash"
-
 [dialectic.levels.low.model_config.overrides]
 base_url = "https://openrouter.ai/api/v1"
-
-[dialectic.levels.medium]
-MAX_TOOL_ITERATIONS = 2
 
 [dialectic.levels.medium.model_config]
 transport = "openai"
 model = "google/gemini-2.5-flash"
-
 [dialectic.levels.medium.model_config.overrides]
 base_url = "https://openrouter.ai/api/v1"
-
-[dream]
-ENABLED = true
-SCHEDULER_SLEEP_INTERVAL_SECONDS = 900
 
 [dream.model_config]
 transport = "openai"
 model = "google/gemini-2.5-flash"
-
 [dream.model_config.overrides]
 base_url = "https://openrouter.ai/api/v1"
-
-[summary]
-ENABLED = true
-MAX_INPUT_TOKENS = 25000
 
 [summary.model_config]
 transport = "openai"
 model = "google/gemini-2.5-flash"
-
 [summary.model_config.overrides]
 base_url = "https://openrouter.ai/api/v1"
 
 [vector_store]
 TYPE = "pgvector"
-MIGRATED = false
 NAMESPACE = "honcho"
