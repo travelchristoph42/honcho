@@ -8,14 +8,19 @@ services:
       redis:
         condition: service_healthy
     ports:
-      - "8000:8000"
+      - "8010:8000"
     environment:
       - DB_CONNECTION_URI=postgresql+psycopg://honcho:honcho@database:5432/honcho
       - CACHE_URL=redis://redis:6379/0?suppress=true
       - CACHE_ENABLED=true
-      # Honcho v3 standard env vars for OpenRouter
+      - VECTOR_STORE_TYPE=pgvector
+      # LLM provider — OpenRouter (OpenAI-compatible)
       - LLM_OPENAI_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-      - OPENAI_BASE_URL=https://openrouter.ai/api/v1
+      # Override base URL for ALL Honcho features
+      - DERIVER_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
+      - DIALECTIC_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
+      - SUMMARY_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
+      - DREAM_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
     restart: unless-stopped
 
   deriver:
@@ -31,9 +36,12 @@ services:
       - CACHE_URL=redis://redis:6379/0?suppress=true
       - CACHE_ENABLED=true
       - METRICS_ENABLED=false
-      # Honcho v3 standard env vars for OpenRouter
+      - VECTOR_STORE_TYPE=pgvector
       - LLM_OPENAI_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-      - OPENAI_BASE_URL=https://openrouter.ai/api/v1
+      - DERIVER_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
+      - DIALECTIC_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
+      - SUMMARY_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
+      - DREAM_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
     restart: unless-stopped
 
   database:
