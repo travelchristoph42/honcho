@@ -1,6 +1,8 @@
 services:
   api:
-    image: ghcr.io/plastic-labs/honcho:latest
+    build:
+      context: https://github.com/travelchristoph42/honcho.git
+      dockerfile: Dockerfile
     entrypoint: ["sh", "docker/entrypoint.sh"]
     depends_on:
       database:
@@ -13,24 +15,12 @@ services:
       - DB_CONNECTION_URI=postgresql+psycopg://honcho:honcho@database:5432/honcho
       - CACHE_URL=redis://redis:6379/0?suppress=true
       - CACHE_ENABLED=true
-      - VECTOR_STORE_TYPE=pgvector
-      - LLM_OPENAI_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-      - OPENAI_BASE_URL=https://openrouter.ai/api/v1
-      - DERIVER_MODEL_CONFIG__TRANSPORT=openai
-      - DERIVER_MODEL_CONFIG__MODEL=google/gemini-2.5-flash
-      - DERIVER_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
-      - DIALECTIC_MODEL_CONFIG__TRANSPORT=openai
-      - DIALECTIC_MODEL_CONFIG__MODEL=google/gemini-2.5-flash
-      - DIALECTIC_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
-      - SUMMARY_MODEL_CONFIG__TRANSPORT=openai
-      - SUMMARY_MODEL_CONFIG__MODEL=google/gemini-2.5-flash
-      - SUMMARY_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
-      - EMBEDDING_MODEL_CONFIG__MODEL=openai/text-embedding-3-small
-      - EMBEDDING_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
     restart: unless-stopped
 
   deriver:
-    image: ghcr.io/plastic-labs/honcho:latest
+    build:
+      context: https://github.com/travelchristoph42/honcho.git
+      dockerfile: Dockerfile
     entrypoint: ["/app/.venv/bin/python", "-m", "src.deriver"]
     depends_on:
       database:
@@ -42,20 +32,6 @@ services:
       - CACHE_URL=redis://redis:6379/0?suppress=true
       - CACHE_ENABLED=true
       - METRICS_ENABLED=false
-      - VECTOR_STORE_TYPE=pgvector
-      - LLM_OPENAI_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
-      - OPENAI_BASE_URL=https://openrouter.ai/api/v1
-      - DERIVER_MODEL_CONFIG__TRANSPORT=openai
-      - DERIVER_MODEL_CONFIG__MODEL=google/gemini-2.5-flash
-      - DERIVER_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
-      - DIALECTIC_MODEL_CONFIG__TRANSPORT=openai
-      - DIALECTIC_MODEL_CONFIG__MODEL=google/gemini-2.5-flash
-      - DIALECTIC_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
-      - SUMMARY_MODEL_CONFIG__TRANSPORT=openai
-      - SUMMARY_MODEL_CONFIG__MODEL=google/gemini-2.5-flash
-      - SUMMARY_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
-      - EMBEDDING_MODEL_CONFIG__MODEL=openai/text-embedding-3-small
-      - EMBEDDING_MODEL_CONFIG__OVERRIDES__BASE_URL=https://openrouter.ai/api/v1
     restart: unless-stopped
 
   database:
