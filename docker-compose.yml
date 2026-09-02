@@ -14,31 +14,8 @@ services:
       - CACHE_URL=redis://redis:6379/0?suppress=true
       - CACHE_ENABLED=true
       - VECTOR_STORE_TYPE=pgvector
-    volumes:
-      - type: bind
-        source: ./config.toml
-        target: /app/config.toml
-        read_only: true
-        content: |
-          [llm]
-          OPENAI_API_KEY = "sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d"
-          [deriver.model_config]
-          transport = "openai"
-          model = "google/gemini-2.5-flash"
-          [deriver.model_config.overrides]
-          base_url = "https://openrouter.ai/api/v1"
-          [dialectic.levels.low.model_config]
-          transport = "openai"
-          model = "google/gemini-2.5-flash"
-          [dialectic.levels.low.model_config.overrides]
-          base_url = "https://openrouter.ai/api/v1"
-          [embedding.model_config]
-          transport = "openai"
-          model = "openai/text-embedding-3-small"
-          [embedding.model_config.overrides]
-          base_url = "https://openrouter.ai/api/v1"
-          [vector_store]
-          TYPE = "pgvector"
+      - LLM_OPENAI_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
+      - OPENAI_BASE_URL=https://openrouter.ai/api/v1
     restart: unless-stopped
 
   deriver:
@@ -55,31 +32,8 @@ services:
       - CACHE_ENABLED=true
       - METRICS_ENABLED=false
       - VECTOR_STORE_TYPE=pgvector
-    volumes:
-      - type: bind
-        source: ./config.toml
-        target: /app/config.toml
-        read_only: true
-        content: |
-          [llm]
-          OPENAI_API_KEY = "sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d"
-          [deriver.model_config]
-          transport = "openai"
-          model = "google/gemini-2.5-flash"
-          [deriver.model_config.overrides]
-          base_url = "https://openrouter.ai/api/v1"
-          [dialectic.levels.low.model_config]
-          transport = "openai"
-          model = "google/gemini-2.5-flash"
-          [dialectic.levels.low.model_config.overrides]
-          base_url = "https://openrouter.ai/api/v1"
-          [embedding.model_config]
-          transport = "openai"
-          model = "openai/text-embedding-3-small"
-          [embedding.model_config.overrides]
-          base_url = "https://openrouter.ai/api/v1"
-          [vector_store]
-          TYPE = "pgvector"
+      - LLM_OPENAI_API_KEY=sk-or-v1-dabbc9fc6240a22c24d2a306af75f737561015bca337345d90b7b00eaa38a5e3d
+      - OPENAI_BASE_URL=https://openrouter.ai/api/v1
     restart: unless-stopped
 
   database:
